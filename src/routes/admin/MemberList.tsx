@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import type { Member } from '@/services/useUser';
 import { Input } from '@/components/ui/input';
@@ -12,7 +11,6 @@ export default function MemberList() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
   // const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const ITEMS_PER_PAGE = 10;
   const filtered = useMemo(() => {

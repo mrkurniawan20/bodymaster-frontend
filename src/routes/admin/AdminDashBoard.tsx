@@ -1,17 +1,11 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Menu, Users, CalendarDays, Settings, Bell } from 'lucide-react';
+import { Users, CalendarDays, Bell } from 'lucide-react';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
-import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
-import type { Member, Notifications, Payment, Visitor } from '@/services/useUser';
+import { NavLink, useOutletContext } from 'react-router-dom';
+import type { Member, Notifications, Visitor } from '@/services/useUser';
 import { useState } from 'react';
 import { GoDotFill } from 'react-icons/go';
-
-const expiredMembers = [
-  { id: 1, name: 'John Doe', expiredAt: '2025-05-01' },
-  { id: 2, name: 'Jane Smith', expiredAt: '2025-04-28' },
-  { id: 3, name: 'Mark Evans', expiredAt: '2025-05-05' },
-];
 
 // export interface Member {
 //   id: number;

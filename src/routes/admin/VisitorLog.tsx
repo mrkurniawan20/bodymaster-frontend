@@ -71,9 +71,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import type { Member, Visitor } from '@/services/useUser';
+import { useState } from 'react';
+import type { Visitor } from '@/services/useUser';
 import { useOutletContext } from 'react-router-dom';
 
 // type Visitor = {

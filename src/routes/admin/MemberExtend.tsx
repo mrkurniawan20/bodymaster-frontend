@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import type { Member } from '@/services/useUser';
-import IncorrectPassword from '@/components/IncorrectPassword';
 import { Checkbox } from '@/components/ui/checkbox';
+import LoadingPage from '../LoadingPage';
 
 export default function MemberExtend() {
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ export default function MemberExtend() {
   }
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-6">
+      {loading && <LoadingPage />}
       <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4 text-center">Extend Member</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

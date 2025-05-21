@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Kalau kamu pakai React Router
 import { Checkbox } from '@/components/ui/checkbox';
 import axios from 'axios';
 

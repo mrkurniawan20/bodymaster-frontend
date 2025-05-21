@@ -1,14 +1,9 @@
-import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 type Member = {
   id: number;
   name: string;
   expireDate: string; // or Date if already parsed
-};
-
-type NotificationProps = {
-  members: Member[];
 };
 
 export function ExpireMemberPage() {
