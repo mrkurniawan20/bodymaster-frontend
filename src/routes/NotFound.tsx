@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Ghost } from 'lucide-react';
 
 export default function NotFoundPage() {
   const navigate = useNavigate();

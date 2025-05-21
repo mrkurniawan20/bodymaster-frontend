@@ -1,5 +1,5 @@
 import type { Member } from '@/services/useUser';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 export function MemberInfoPage() {

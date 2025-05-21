@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { useMember, useUser } from '@/services/useUser';
+import { useMember } from '@/services/useUser';
 import LoadingPage from './LoadingPage';
-// import { useUser } from '@/utils/setUser';
 
 interface DecodedProps {
   id: number;

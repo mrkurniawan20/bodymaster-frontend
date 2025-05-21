@@ -5,9 +5,7 @@ import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 // import { loginMember } from '@/services/api';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { loginMember } from '@/services/api';
-import IncorrectPassword from '@/components/IncorrectPassword';
 
 export default function GymLoginMobile() {
   const token = localStorage.getItem('token');
@@ -29,10 +27,8 @@ export default function GymLoginMobile() {
     try {
       // const res = await axios.post('http://127.0.0.1:3450/member/loginmember/', formData);
       const res = await loginMember(formData);
-      console.log(res.data);
       const token = res.data.loggedInMember.token;
       const user = res.data.loggedInMember.user;
-      const message = res.data.message;
       // const user = res.data.loggedInMember.user;
       localStorage.setItem('token', token);
       // console.log(user);

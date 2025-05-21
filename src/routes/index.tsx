@@ -8,7 +8,6 @@ import NotFoundPage from './NotFound';
 import { AdminDashboard } from './admin/AdminDashBoard';
 import AddMember from './admin/AddMember';
 import VisitorLog from './admin/VisitorLog';
-import MemberListDummy from './admin/MemberListDummy';
 import PaymentPage from './admin/Payment';
 import { ProtectedRouteLayoutAdmin } from './ProtectedRouteAdmin';
 import MemberList from './admin/MemberList';

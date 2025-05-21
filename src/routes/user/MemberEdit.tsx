@@ -17,7 +17,6 @@ export default function EditMemberPage() {
     }
   }, []);
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
