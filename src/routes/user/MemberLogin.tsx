@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
+import bodyMaster from '@/assets/img/bodymaster.png';
 // import { loginMember } from '@/services/api';
 import { useNavigate } from 'react-router-dom';
 import { loginMember } from '@/services/api';
@@ -72,7 +73,7 @@ export default function GymLoginMobile() {
           <p className="text-center text-md text-gray-500">
             Hanya visit? <br /> <span className="text-blue-600 ">Silakan hubungi instruktur</span>
           </p>
-          <img src="/src/assets/img/bodymaster.png" className="w-1/2 m-auto invert" alt="" />
+          <img src={bodyMaster} className="w-1/2 m-auto invert" alt="" />
         </CardContent>
       </Card>
     </div>
