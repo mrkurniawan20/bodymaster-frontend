@@ -28,7 +28,6 @@ export default function AddMember() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  console.log(formData);
 
   //   const navigate = useNavigate(); // Optional, kalau mau redirect setelah submit
 
@@ -59,8 +58,6 @@ export default function AddMember() {
       setError(true);
     }
     // TODO: Kirim ke backend di sini
-
-    console.log('Submitting new member:', formData);
 
     // navigate('/dashboard'); // kalau mau balik ke dashboard
   };
@@ -149,7 +146,6 @@ export default function AddMember() {
                   name="qr"
                   checked={formData.method === 'QR'}
                   onCheckedChange={(checked) => {
-                    console.log(formData);
                     if (checked) setFormData((prev) => ({ ...prev, method: 'QR' }));
                   }}
                   className="mt-2"
@@ -165,7 +161,6 @@ export default function AddMember() {
                   name="cash"
                   checked={formData.method === 'CASH'}
                   onCheckedChange={(checked) => {
-                    console.log(formData);
                     if (checked) setFormData((prev) => ({ ...prev, method: 'CASH' }));
                   }}
                   className="mt-2"

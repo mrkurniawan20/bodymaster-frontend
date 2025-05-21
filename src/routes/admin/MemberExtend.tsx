@@ -22,7 +22,6 @@ export default function MemberExtend() {
   const [loading, setLoading] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(formData);
     setButtonDisable(true);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -68,7 +67,6 @@ export default function MemberExtend() {
                   name="qr"
                   checked={formData.method === 'QR'}
                   onCheckedChange={(checked) => {
-                    console.log(formData);
                     if (checked) setFormData((prev) => ({ ...prev, method: 'QR' }));
                   }}
                   className="mt-2"
@@ -84,7 +82,6 @@ export default function MemberExtend() {
                   name="cash"
                   checked={formData.method === 'CASH'}
                   onCheckedChange={(checked) => {
-                    console.log(formData);
                     if (checked) setFormData((prev) => ({ ...prev, method: 'CASH' }));
                   }}
                   className="mt-2"

@@ -51,26 +51,6 @@ export function AdminDashboard() {
   const { member } = useOutletContext<{ member: Member[] }>();
   const { todayVisit } = useOutletContext<{ todayVisit: Visitor[] }>();
   const { notifications } = useOutletContext<{ notifications: Notifications[] }>();
-  // console.log(member, todayVisit, allPayment);
-  // const [getMember, setGetMember] = useState([]);
-  // const [getVisit, setGetVisit] = useState([]);
-  // useEffect(() => {
-  //   async function fetchMembers() {
-  //     try {
-  //       // const member = await axios.get('http://127.0.0.1:3450/member/getallmember/');
-  //       // setGetMember(member.data);
-  //       // if (!localStorage.getItem('members')) {
-  //       // }
-  //       const visit = await axios.get('http://127.0.0.1:3450/member/getTodayVisit/');
-  //       setGetVisit(visit.data);
-  //     } catch (error: any) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchMembers();
-  // }, []);
-  // const dataMember: Member[] = member;
-  // const dataVisit: Visit[] = getVisit;
 
   const inactiveMember = member.filter((obj) => obj.status == `INACTIVE`).length;
   const activeMember = member.length - inactiveMember;

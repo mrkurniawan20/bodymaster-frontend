@@ -21,8 +21,6 @@ export function ProtectedRouteLayoutAdmin() {
   function isTokenExpired(token: string): boolean {
     try {
       const decodedData = jwtDecode<DecodedProps>(token!);
-      // console.log(decoded.exp);
-      //   console.log(decoded);
       return decodedData.exp * 1000 < Date.now();
     } catch (error) {
       return true;

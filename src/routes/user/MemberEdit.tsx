@@ -22,47 +22,10 @@ export default function EditMemberPage() {
     phone: '',
     password: '',
   });
-  // setFormData({
-  //   name: user.name,
-  //   phone: user.phone,
-  //   password: '',
-  // });
 
   const [loading, setLoading] = useState(false);
 
-  // Fetch data member berdasarkan ID
-  // useEffect(() => {
-  //   const fetchMember = async () => {
-  //     try {
-  //       const res = await axios.get(`http://127.0.0.1:3450/member/getmember/${id}`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setFormData({
-  //         name: res.data.name || '',
-  //         phone: res.data.phone || '',
-  //         password: '',
-  //       });
-  //     } catch (err) {
-  //       console.error('Error fetching member:', err);
-  //       navigate('/landingpage');
-  //     }
-  //   };
-
-  //   fetchMember();
-  // }, [id]);
-
-  //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const { name, value } = e.target;
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       [name]: value,
-  //     }));
-  //   };
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(formData);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   function handleFile(e: ChangeEvent<HTMLInputElement>) {

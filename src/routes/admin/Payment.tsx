@@ -42,13 +42,9 @@ export default function PaymentPage() {
     const selected = selectedDate.toLocaleDateString();
     return paymentDate == selected;
   });
-  // console.log(String(allPayment[0].paymentAt).split('T')[0]);
-  // console.log(selectedDate.toJSON().split('T')[0]);
-  // console.log(String(allPayment[0].paymentAt).split('T')[0] == selectedDate.toJSON().split('T')[0]);
-  console.log(filteredPayments);
+
   const totalPages = Math.ceil(filteredPayments.length / ITEMS_PER_PAGE);
   const paginated = filteredPayments.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-  // console.log(paginated);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
@@ -98,7 +94,6 @@ export default function PaymentPage() {
                 amount: parseInt((form.elements.namedItem('amount') as HTMLInputElement).value, 10),
                 method: (form.elements.namedItem('method') as HTMLInputElement).value,
               };
-              console.log('New Payment:', newPayment);
               // TODO: Add to state or send to backend
               form.reset();
             }}

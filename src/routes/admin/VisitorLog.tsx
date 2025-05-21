@@ -94,41 +94,6 @@ const ITEMS_PER_PAGE = 10;
 
 export default function VisitorLog() {
   const { visit } = useOutletContext<{ visit: Visitor[] }>();
-  // const { member } = useOutletContext<{ member: Member[] }>();
-  // const [visitData, setVisitData] = useState<Visitor[]>([
-  //   {
-  //     id: 0,
-  //     member: {
-  //       id: 0,
-  //       name: '',
-  //       phone: '',
-  //       image: '',
-  //       expireDate: new Date(),
-  //       status: 'ACTIVE',
-  //     },
-  //     memberId: 0,
-  //     visitedAt: new Date(),
-  //   },
-  // ]);
-
-  // console.log(member);
-
-  // const [members, setMembers] = useState([]);
-  // useEffect(() => {
-  //   async function fetchMember() {
-  //     try {
-  //       const visit = await axios.get('http://127.0.0.1:3450/member/getvisitlog/');
-  //       const visitorData = visit.data;
-  //       setVisitData(visitorData);
-  //     } catch (error) {}
-  //   }
-  //   fetchMember();
-  // }, []);
-  // const newVisits = visitData.map((vis) => ({
-  //   ...vis,
-  //   visitedAt: new Date(vis.visitedAt).toISOString().split('T')[0],
-  // }));
-  // console.log(newVisits);
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -137,41 +102,14 @@ export default function VisitorLog() {
     setCurrentPage(1); // Reset halaman saat ganti tanggal
   };
 
-  // const visitorData: Record<string, Visit[]> = {
-  //   '2025-05-12': Array.from({ length: 100 }, (_, i) => ({
-  //     name: `Visitor ${i + 1}`,
-  //     time: `${9 + (i % 12)}:${(i * 7) % 60} AM`,
-  //   })),
-  //   '2025-05-11': [
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //     { name: 'Alice Cooper', time: '02:00 PM' },
-  //     { name: 'Bob Marley', time: '03:15 PM' },
-  //   ],
-  // };
-  // visitorData[]
-  // const visitors: Visit[] = visitorData[formatDate(selectedDate)] || [];
   const visits = visit.filter((v) => {
     const visitDate = new Date(v.visitedAt).toLocaleDateString();
-    // console.log(visitDate);
     const selected = selectedDate.toLocaleDateString();
     return visitDate === selected;
   });
-  // console.log(visit);
-  // console.log(newVisits);
-  // const totalPages = Math.ceil(newVisits.length / ITEMS_PER_PAGE);
-  // const paginatedVisitors = newVisits.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
   const totalPages = Math.ceil(visits.length / ITEMS_PER_PAGE);
   const paginatedVisitors = visits.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
-  // console.log(paginatedVisitors);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));

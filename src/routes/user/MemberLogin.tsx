@@ -18,32 +18,24 @@ export default function GymLoginMobile() {
     password: '',
   });
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(formData);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const [hidden, setHidden] = useState('hidden');
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
-      // const res = await axios.post('http://127.0.0.1:3450/member/loginmember/', formData);
       const res = await loginMember(formData);
       const token = res.data.loggedInMember.token;
       const user = res.data.loggedInMember.user;
-      // const user = res.data.loggedInMember.user;
       localStorage.setItem('token', token);
-      // console.log(user);
-      // localStorage.setItem('expired-day', user)
-      // console.log(user);
-      // localStorage.setItem('user', user);
+
       if (user.role == `ADMIN`) {
         navigate('/dashboard');
       } else {
-        // await axios.post(`http://127.0.0.1:3450/member/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
         navigate('/landingpage');
       }
     } catch (error: any) {
       setHidden('');
-      console.log('salah');
     }
   }
   return (

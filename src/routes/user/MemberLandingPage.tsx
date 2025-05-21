@@ -13,9 +13,7 @@ export default function MemberLandingPage() {
     try {
       await axios.post(`http://127.0.0.1:3450/member/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/memberinfo');
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    } catch (error: any) {}
   }
 
   return (

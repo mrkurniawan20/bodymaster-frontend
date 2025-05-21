@@ -4,13 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 
 export function MemberInfoPage() {
   const { user } = useOutletContext<{ user: Member }>();
-  // const [isExpired, setIsExpired] = useState(true);
-  // console.log(user.status == 'ACTIVE');
-  // useEffect(() => {
-  //   if (user.status == 'ACTIVE') {
-  //     setIsExpired(false);
-  //   }
-  // }, [user]);
+
   const isExpired = user.status !== 'ACTIVE';
 
   const now = new Date();

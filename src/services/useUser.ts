@@ -51,19 +51,14 @@ export function useUser() {
     try {
       const decoded = jwtDecode<Decoded>(token);
       const userId = decoded.id;
-      console.log(userId);
       axios
         .get(`http://127.0.0.1:3450/member/getmember/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
-        // .get(`http://127.0.0.1:3450/member/getmember/${userId}`)
         .then((res) => setUser(res.data))
-        // .then(() => console.log('running'))
-        .catch((err) => {
-          console.log(`Failed to fetch user ${err}`);
+        .catch(() => {
           localStorage.removeItem('token');
         })
         .finally(() => setLoading(false));
     } catch (error) {
-      console.log('Unable to fetch user');
       localStorage.removeItem('token');
     }
   }, []);
@@ -94,42 +89,13 @@ export function useMember() {
         .then(([allMemberRes, visitLogRes, todayVisitRes, allPaymentRes, allNotificationsRes]) => {
           setMember(allMemberRes.data), setVisit(visitLogRes.data), setTodayVisit(todayVisitRes.data), setAllPayment(allPaymentRes.data), setNotifications(allNotificationsRes.data);
         })
-        .catch((err) => {
-          console.log(`Failed to fetch user ${err}`);
+        .catch(() => {
           localStorage.removeItem('token');
         })
         .finally(() => {
           setLoading(false);
         });
-
-      //   axios
-      //     .get(`http://127.0.0.1:3450/member/getallmember/`, { headers: { Authorization: `Bearer ${token}` } })
-      //     .then((res) => setMember(res.data))
-      //     .catch((err) => {
-      //       console.log(`Failed to fetch user ${err}`);
-      //       localStorage.removeItem('token');
-      //     })
-      //     .finally(() => setLoading(false));
-      //   axios
-      //     .get('http://127.0.0.1:3450/member/getvisitlog/')
-      //     .then((res) => setVisit(res.data))
-      //     .catch((err) => {
-      //       console.log(`Failed to fetch user ${err}`);
-      //       localStorage.removeItem('token');
-      //     })
-      //     .finally(() => setLoading(false));
-      //   axios
-      //     .get('http://127.0.0.1:3450/member/getTodayVisit/')
-      //     .then((res) => {
-      //       setTodayVisit(res.data);
-      //     })
-      //     .catch((err) => {
-      //       console.log(`Failed to fetch user ${err}`);
-      //       localStorage.removeItem('token');
-      //     })
-      //     .finally(() => setLoading(false));
     } catch (error) {
-      console.log('Unable to fetch user');
       localStorage.removeItem('token');
     }
   }, []);
