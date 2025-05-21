@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 
@@ -52,8 +52,8 @@ export function useUser() {
       const decoded = jwtDecode<Decoded>(token);
       const userId = decoded.id;
       axios
-        .get(`http://127.0.0.1:3450/member/getmember/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => setUser(res.data))
+        .get(`https://bodymaster-backend.vercel.app/member/getmember/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
+        .then((res: AxiosResponse) => setUser(res.data))
         .catch(() => {
           localStorage.removeItem('token');
         })
@@ -80,10 +80,10 @@ export function useMember() {
     }
     try {
       setLoading(true);
-      const fetchAllMember = axios.get(`http://127.0.0.1:3450/member/getallmember/`, { headers: { Authorization: `Bearer ${token}` } });
-      const fetchVisitLog = axios.get('http://127.0.0.1:3450/member/getvisitlog/', { headers: { Authorization: `Bearer ${token}` } });
-      const fetchTodayVisit = axios.get('http://127.0.0.1:3450/member/getTodayVisit/', { headers: { Authorization: `Bearer ${token}` } });
-      const fetchAllPayment = axios.get('http://127.0.0.1:3450/member/getpayment/', { headers: { Authorization: `Bearer ${token}` } });
+      const fetchAllMember = axios.get(`https://bodymaster-backend.vercel.app/member/getallmember/`, { headers: { Authorization: `Bearer ${token}` } });
+      const fetchVisitLog = axios.get('https://bodymaster-backend.vercel.app/member/getvisitlog/', { headers: { Authorization: `Bearer ${token}` } });
+      const fetchTodayVisit = axios.get('https://bodymaster-backend.vercel.app/member/getTodayVisit/', { headers: { Authorization: `Bearer ${token}` } });
+      const fetchAllPayment = axios.get('https://bodymaster-backend.vercel.app/member/getpayment/', { headers: { Authorization: `Bearer ${token}` } });
       const fetchAllNotifications = axios.get('http://localhost:3450/member/getnotif', { headers: { Authorization: `Bearer ${token}` } });
       Promise.all([fetchAllMember, fetchVisitLog, fetchTodayVisit, fetchAllPayment, fetchAllNotifications])
         .then(([allMemberRes, visitLogRes, todayVisitRes, allPaymentRes, allNotificationsRes]) => {

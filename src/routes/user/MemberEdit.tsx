@@ -40,7 +40,7 @@ export default function EditMemberPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.patch(`http://127.0.0.1:3450/member/editmember/${id}`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } });
+      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } });
       navigate('/landingpage');
     } catch (err) {
       console.error('Update failed:', err);

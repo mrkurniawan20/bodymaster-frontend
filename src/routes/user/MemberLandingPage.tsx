@@ -11,7 +11,7 @@ export default function MemberLandingPage() {
 
   async function handleClick() {
     try {
-      await axios.post(`http://127.0.0.1:3450/member/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.post(`https://bodymaster-backend.vercel.app/member/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/memberinfo');
     } catch (error: any) {}
   }

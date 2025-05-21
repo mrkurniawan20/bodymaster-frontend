@@ -41,7 +41,7 @@ export default function AddMember() {
     setLoading(true);
     try {
       axios
-        .post('http://127.0.0.1:3450/member/addmember/', formData, { headers: { Authorization: `Bearer ${token}` } })
+        .post('https://bodymaster-backend.vercel.app/member/addmember/', formData, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => {
           setError(false);
           setSuccess(true);
