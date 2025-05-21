@@ -73,7 +73,7 @@ export default function GymLoginMobile() {
           <p className="text-center text-md text-gray-500">
             Hanya visit? <br /> <span className="text-blue-600 ">Silakan hubungi instruktur</span>
           </p>
-          <img src="../../assets/img/bodymaster.png" className="w-1/2 m-auto invert" alt="" />
+          <img src="@/assets/img/bodymaster.png" className="w-1/2 m-auto invert" alt="" />
         </CardContent>
       </Card>
     </div>
