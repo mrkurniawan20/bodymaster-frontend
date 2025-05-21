@@ -89,11 +89,6 @@ export default function PaymentPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const form = e.currentTarget;
-              const newPayment = {
-                member: (form.elements.namedItem('member') as HTMLInputElement).value,
-                amount: parseInt((form.elements.namedItem('amount') as HTMLInputElement).value, 10),
-                method: (form.elements.namedItem('method') as HTMLInputElement).value,
-              };
               // TODO: Add to state or send to backend
               form.reset();
             }}
