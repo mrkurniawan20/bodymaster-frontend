@@ -30,7 +30,7 @@ export default function MemberExtend() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`http://localhost:3450/member/extendmember/`, formData, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.post(`https://bodymaster-backend.vercel.app/member/extendmember/`, formData, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/dashboard');
       window.location.reload();
     } catch (err: any) {
