@@ -17,7 +17,7 @@ export default function EditMemberPage() {
     }
   }, []);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{ name: string; phone: string; password: string; image?: File }>({
     name: '',
     phone: '',
     password: '',
@@ -32,7 +32,7 @@ export default function EditMemberPage() {
     // setSelectedFile(e.target.files[0])
     const files = e.target.files;
     if (files) {
-      setFormData({ ...formData, [e.target.name]: files[0] });
+      setFormData((prev) => ({ ...prev, image: files[0] }));
     }
   }
 
@@ -40,7 +40,12 @@ export default function EditMemberPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, formData, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' } });
+      const data = new FormData();
+      if (formData.name) data.append('name', formData.name);
+      if (formData.phone) data.append('phone', formData.phone);
+      if (formData.password) data.append('password', formData.password);
+      if (formData.image) data.append('image', formData.image);
+      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/landingpage');
     } catch (err) {
       console.error('Update failed:', err);
@@ -53,7 +58,7 @@ export default function EditMemberPage() {
     <div className="min-h-screen bg-gray-50 px-4 py-6">
       <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4 text-center">Edit Member</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
           <div>
             <Label htmlFor="name" className="mb-2">
               Nama
