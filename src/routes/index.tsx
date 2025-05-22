@@ -13,6 +13,7 @@ import { ProtectedRouteLayoutAdmin } from './ProtectedRouteAdmin';
 import MemberList from './admin/MemberList';
 import MemberExtend from './admin/MemberExtend';
 import { ExpireMemberPage } from './admin/MemberExpired';
+import PageTitle from '@/components/PageTitle';
 
 export let router = createBrowserRouter([
   {
@@ -20,15 +21,18 @@ export let router = createBrowserRouter([
     children: [
       {
         path: '/landingPage',
-        Component: MemberLandingPage,
+        // Component: MemberLandingPage,
+        Component: PageTitle(MemberLandingPage, `Body Master | Landing Page`),
       },
       {
         path: '/memberInfo',
-        Component: MemberInfoPage,
+        // Component: MemberInfoPage,
+        Component: PageTitle(MemberInfoPage, `Body Master | Let's Workout !`),
       },
       {
         path: '/editMember/:id',
-        Component: EditMemberPage,
+        // Component: EditMemberPage,
+        Component: PageTitle(EditMemberPage, `Body Master | Edit Profile`),
       },
     ],
   },
@@ -37,40 +41,49 @@ export let router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
-        Component: AdminDashboard,
+        Component: PageTitle(AdminDashboard, `Body Master | Admin Dashboard`),
+        // Component: AdminDashboard,
       },
       {
         path: '/addmember',
-        Component: AddMember,
+        // Component: AddMember,
+        Component: PageTitle(AddMember, `Body Master | Add Member`),
       },
       {
         path: '/visitor',
-        Component: VisitorLog,
+        // Component: VisitorLog,
+        Component: PageTitle(VisitorLog, `Body Master | Visitor Log`),
       },
       {
         path: '/memberlist',
-        Component: MemberList,
+        // Component: MemberList,
+        Component: PageTitle(MemberList, `Body Master | List Member`),
       },
       {
         path: '/payment',
-        Component: PaymentPage,
+        // Component: PaymentPage,
+        Component: PageTitle(PaymentPage, `Body Master | Payment`),
       },
       {
         path: '/extendmember',
-        Component: MemberExtend,
+        // Component: MemberExtend,
+        Component: PageTitle(MemberExtend, `Body Master | Extend Member`),
       },
       {
         path: '/expiredmember',
-        Component: ExpireMemberPage,
+        // Component: ExpireMemberPage,
+        Component: PageTitle(ExpireMemberPage, `Body Master | Expired Member`),
       },
     ],
   },
   {
     path: '/',
-    Component: GymLoginMobile,
+    // Component: GymLoginMobile,
+    Component: PageTitle(GymLoginMobile, `Body Master | Login`),
   },
   {
     path: '*',
-    Component: NotFoundPage,
+    // Component: NotFoundPage,
+    Component: PageTitle(NotFoundPage, `Body Master | Not Found`),
   },
 ]);
