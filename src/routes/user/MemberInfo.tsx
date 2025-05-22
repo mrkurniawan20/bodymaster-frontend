@@ -1,6 +1,7 @@
 import type { Member } from '@/services/useUser';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import bodyMaster from '@/assets/img/bodymaster.png';
 
 export function MemberInfoPage() {
   const { user } = useOutletContext<{ user: Member }>();
@@ -70,7 +71,7 @@ export function MemberInfoPage() {
           <p className="text-xl font-semibold">{isExpired ? expired : notExpired}</p>
         </div>
         <div className="mt-4 flex justify-center items-center">
-          <img src="/src/assets/img/bodymaster.png" alt="" className="size-1/2 invert object-contain" />
+          <img src={`${bodyMaster}`} alt="" className="size-1/2 invert object-contain" />
         </div>
       </div>
 
