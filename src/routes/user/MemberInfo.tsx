@@ -59,7 +59,7 @@ export function MemberInfoPage() {
         <h1 className="text-4xl font-semibold">{finalDate}</h1>
         <div className="flex justify-center my-6">
           <img
-            src={`http://localhost:3450/${user.image}`} // Replace with the actual image URL
+            src={`${user.image}`} // Replace with the actual image URL
             alt="Rafli Kurniawan"
             className="w-80 h-90 rounded-xl object-cover shadow-xl"
           />

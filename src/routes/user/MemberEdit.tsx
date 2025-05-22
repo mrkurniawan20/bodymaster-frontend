@@ -40,12 +40,12 @@ export default function EditMemberPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      // const data = new FormData();
-      // if (formData.name) data.append('name', formData.name);
-      // if (formData.phone) data.append('phone', formData.phone);
-      // if (formData.password) data.append('password', formData.password);
-      // if (formData.image) data.append('image', formData.image);
-      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, formData, { headers: { Authorization: `Bearer ${token}` } });
+      const data = new FormData();
+      if (formData.name) data.append('name', formData.name);
+      if (formData.phone) data.append('phone', formData.phone);
+      if (formData.password) data.append('password', formData.password);
+      if (formData.image) data.append('image', formData.image);
+      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/landingpage');
     } catch (err) {
       console.error('Update failed:', err);
