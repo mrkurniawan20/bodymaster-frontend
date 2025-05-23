@@ -9,22 +9,6 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { useOutletContext } from 'react-router-dom';
 import type { Payment } from '@/services/useUser';
 
-// type Payment = {
-//   id: number;
-//   member: string;
-//   date: string;
-//   amount: number;
-//   method: string;
-// };
-
-// const dummyPayments: Payment[] = Array.from({ length: 32 }, (_, i) => ({
-//   id: i + 1,
-//   member: `Member ${i + 1}`,
-//   date: `2025-05-${((i % 30) + 1).toString().padStart(2, '0')}`,
-//   amount: 250000,
-//   method: ['Cash', 'Transfer', 'Card'][i % 3],
-// }));
-
 const ITEMS_PER_PAGE = 10;
 
 const formatDate = (date: Date): string => date.toISOString().split('T')[0];

@@ -61,7 +61,7 @@ export function useUser() {
     } catch (error) {
       localStorage.removeItem('token');
     }
-  }, []);
+  }, [loading]);
   return { user, loading };
 }
 
