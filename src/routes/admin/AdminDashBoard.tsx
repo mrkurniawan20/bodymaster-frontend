@@ -67,6 +67,7 @@ export function AdminDashboard() {
         </div>
       )}
       <div className="flex justify-between items-center">
+        <h1 className="text-xl font-bold">Body Master Dashboard</h1>
         <Drawer>
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" onClick={handleNotifClick}>
@@ -95,7 +96,6 @@ export function AdminDashboard() {
         </Drawer>
       </div>
 
-      {/* Summary Cards */}
       <div className="space-y-4">
         <Card className="bg-white">
           <CardContent className="py-4 px-4 flex items-center justify-between">
@@ -120,7 +120,6 @@ export function AdminDashboard() {
         </NavLink>
       </div>
 
-      {/* Quick Navigation */}
       <div className="grid grid-cols-2 gap-4 mt-4">
         <NavLink to={'/payment'}>
           <Button className="w-full" variant="secondary">
