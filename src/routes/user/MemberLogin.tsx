@@ -4,9 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import bodyMaster from '@/assets/img/bodymaster.png';
-// import { loginMember } from '@/services/api';
 import { useNavigate } from 'react-router-dom';
 import { loginMember } from '@/services/api';
+import { Loader2 } from 'lucide-react';
 
 export default function GymLoginMobile() {
   const token = localStorage.getItem('token');
@@ -22,17 +22,21 @@ export default function GymLoginMobile() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const [hidden, setHidden] = useState('hidden');
+  const [loading, setLoading] = useState(false);
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await loginMember(formData);
       const token = res.data.loggedInMember.token;
       const user = res.data.loggedInMember.user;
       localStorage.setItem('token', token);
 
       if (user.role == `ADMIN`) {
+        setLoading(false);
         navigate('/dashboard');
       } else {
+        setLoading(false);
         navigate('/landingpage');
       }
     } catch (error: any) {
@@ -65,8 +69,8 @@ export default function GymLoginMobile() {
               <Input id="password" type="password" name="password" placeholder="••••••••" className="mt-1" onChange={handleChange} />
             </div>
 
-            <Button type="submit" className="w-full mt-2">
-              Login
+            <Button type="submit" className="w-full mt-2" disabled={loading}>
+              {loading ? <Loader2 className="size-6 animate-spin text-gray-500" /> : 'Login'}
             </Button>
           </form>
           <p className={`text-center bg-red-400 p-2 rounded-md text-white ${hidden}`}>Password incorrect!</p>
