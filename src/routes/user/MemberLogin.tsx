@@ -31,12 +31,11 @@ export default function GymLoginMobile() {
       const token = res.data.loggedInMember.token;
       const user = res.data.loggedInMember.user;
       localStorage.setItem('token', token);
+      setLoading(false);
 
       if (user.role == `ADMIN`) {
-        setLoading(false);
         navigate('/dashboard');
       } else {
-        setLoading(false);
         navigate('/landingpage');
       }
     } catch (error: any) {
