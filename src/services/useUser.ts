@@ -69,7 +69,6 @@ export function useUser() {
 export function useMember() {
   const [member, setMember] = useState<Member[] | null>(null);
   const [visit, setVisit] = useState<Visitor[] | null>(null);
-  const [todayVisit, setTodayVisit] = useState<Visitor | null>(null);
   const [allPayment, setAllPayment] = useState<Payment[] | null>(null);
   const [notifications, setNotifications] = useState<Notifications[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -99,5 +98,5 @@ export function useMember() {
       localStorage.removeItem('token');
     }
   }, []);
-  return { member, visit, todayVisit, allPayment, notifications, loading };
+  return { member, visit, allPayment, notifications, loading };
 }

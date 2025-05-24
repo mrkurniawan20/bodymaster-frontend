@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Users, CalendarDays, Bell } from 'lucide-react';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { NavLink, useOutletContext } from 'react-router-dom';
-import type { Member, Notifications, Visitor } from '@/services/useUser';
+import type { Member, Notifications } from '@/services/useUser';
 import { useState } from 'react';
 import { GoDotFill } from 'react-icons/go';
 
