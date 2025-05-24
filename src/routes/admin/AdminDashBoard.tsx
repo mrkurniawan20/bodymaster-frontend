@@ -49,7 +49,6 @@ export interface Visit {
 
 export function AdminDashboard() {
   const { member } = useOutletContext<{ member: Member[] }>();
-  const { todayVisit } = useOutletContext<{ todayVisit: Visitor[] }>();
   const { notifications } = useOutletContext<{ notifications: Notifications[] }>();
 
   const inactiveMember = member.filter((obj) => obj.status == `INACTIVE`).length;
@@ -58,6 +57,8 @@ export function AdminDashboard() {
   function handleNotifClick() {
     setReadNotif(true);
   }
+  const visitToday = member.filter((member) => member.visit.length > 0);
+  const amountVisitToday = visitToday.length;
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-4">
@@ -112,7 +113,7 @@ export function AdminDashboard() {
             <CardContent className="py-4 px-4 flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Visits Today</p>
-                <p className="text-xl font-semibold">{todayVisit.length}</p>
+                <p className="text-xl font-semibold">{amountVisitToday}</p>
               </div>
               <CalendarDays className="h-6 w-6 text-gray-400" />
             </CardContent>
