@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import bodyMaster from '@/assets/img/bodymaster.png';
 import { useNavigate } from 'react-router-dom';
 import { loginMember } from '@/services/api';
 import { Loader2 } from 'lucide-react';
@@ -75,7 +74,7 @@ export default function GymLoginMobile() {
           <p className="text-center text-md text-gray-500">
             Hanya visit? <br /> <span className="text-blue-600 ">Silakan hubungi instruktur</span>
           </p>
-          <img src={bodyMaster} className="w-1/2 m-auto invert" alt="" />
+          <img src="https://res.cloudinary.com/dkadm58qz/image/upload/v1748075471/bodymaster_f35woi.png" className="w-1/2 m-auto invert" alt="" />
         </CardContent>
       </Card>
     </div>
