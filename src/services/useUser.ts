@@ -12,6 +12,7 @@ export interface Member {
   image: string;
   expireDate: Date;
   status: string;
+  visit: Visitor[];
 }
 export interface Visitor {
   id: number;
@@ -68,7 +69,6 @@ export function useUser() {
 export function useMember() {
   const [member, setMember] = useState<Member[] | null>(null);
   const [visit, setVisit] = useState<Visitor[] | null>(null);
-  const [todayVisit, setTodayVisit] = useState<Visitor | null>(null);
   const [allPayment, setAllPayment] = useState<Payment[] | null>(null);
   const [notifications, setNotifications] = useState<Notifications[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,12 +82,11 @@ export function useMember() {
       setLoading(true);
       const fetchAllMember = axios.get(`https://bodymaster-backend.vercel.app/member/getallmember/`, { headers: { Authorization: `Bearer ${token}` } });
       const fetchVisitLog = axios.get('https://bodymaster-backend.vercel.app/member/getvisitlog/', { headers: { Authorization: `Bearer ${token}` } });
-      const fetchTodayVisit = axios.get('https://bodymaster-backend.vercel.app/member/getTodayVisit/', { headers: { Authorization: `Bearer ${token}` } });
       const fetchAllPayment = axios.get('https://bodymaster-backend.vercel.app/member/getpayment/', { headers: { Authorization: `Bearer ${token}` } });
       const fetchAllNotifications = axios.get('https://bodymaster-backend.vercel.app/member/getnotif', { headers: { Authorization: `Bearer ${token}` } });
-      Promise.all([fetchAllMember, fetchVisitLog, fetchTodayVisit, fetchAllPayment, fetchAllNotifications])
-        .then(([allMemberRes, visitLogRes, todayVisitRes, allPaymentRes, allNotificationsRes]) => {
-          setMember(allMemberRes.data), setVisit(visitLogRes.data), setTodayVisit(todayVisitRes.data), setAllPayment(allPaymentRes.data), setNotifications(allNotificationsRes.data);
+      Promise.all([fetchAllMember, fetchVisitLog, fetchAllPayment, fetchAllNotifications])
+        .then(([allMemberRes, visitLogRes, allPaymentRes, allNotificationsRes]) => {
+          setMember(allMemberRes.data), setVisit(visitLogRes.data), setAllPayment(allPaymentRes.data), setNotifications(allNotificationsRes.data);
         })
         .catch(() => {
           localStorage.removeItem('token');
@@ -99,5 +98,5 @@ export function useMember() {
       localStorage.removeItem('token');
     }
   }, []);
-  return { member, visit, todayVisit, allPayment, notifications, loading };
+  return { member, visit, allPayment, notifications, loading };
 }
