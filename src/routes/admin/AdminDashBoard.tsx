@@ -61,15 +61,12 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-4">
-      {/* Header */}
       {!readNotif && (
         <div className="absolute right-2.5 top-8.5 text-center items-center">
-          {/* <p className="bg-red-500 rounded-full px-2 py-0.5 text-xs">1</p> */}
           <GoDotFill className="text-red-500 size-7" />
         </div>
       )}
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">Body Master Dashboard</h1>
         <Drawer>
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon" onClick={handleNotifClick}>
@@ -81,12 +78,6 @@ export function AdminDashboard() {
               <DrawerTitle>Expired Members</DrawerTitle>
             </DrawerHeader>
             <div className="p-4 space-y-4 max-h-[300px] overflow-y-auto">
-              {/* {Object.entries(groupByDate(expiredMembers)).map(([label, group]) => (
-                <div key={label} onClick={() => alert('/members?status=inactive')} className="cursor-pointer hover:bg-gray-100 rounded px-3 py-2 transition">
-                  <p className="text-sm font-medium text-gray-800">{label}</p>
-                  <p className="text-xs text-gray-500">{group.length} members expired</p>
-                </div>
-              ))} */}
               {notifications.map((notif) => (
                 <NavLink to={'/expiredmember'} key={notif.id}>
                   <p className="text-sm font-medium text-gray-800">
