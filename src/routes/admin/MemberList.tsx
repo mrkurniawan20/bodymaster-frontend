@@ -1,24 +1,50 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import type { Member } from '@/services/useUser';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import axios from 'axios';
+import LoadingPage from '../LoadingPage';
+import { useDebounce } from '@/services/useDebounce';
 
 export default function MemberList() {
-  const { member } = useOutletContext<{ member: Member[] }>();
-  const [search, setSearch] = useState('');
+  const token = localStorage.getItem('token');
+  const [name, setName] = useState('');
   const [filter, setFilter] = useState('all');
-  // const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<Member[]>([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const ITEMS_PER_PAGE = 10;
-  const filtered = useMemo(() => {
-    return member.filter((m) => m.name.toLowerCase().includes(search.toLowerCase())).filter((m) => (filter === 'all' ? true : filter === 'active' ? m.status == 'ACTIVE' : m.status == 'INACTIVE'));
-  }, [search, filter]);
+  const debounceValue = useDebounce(name, 1000);
 
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  useEffect(() => {
+    async function fetchMember() {
+      setLoading(true);
+      try {
+        const res = await axios.get(`https://bodymaster-backend.vercel.app/member/getallmember/`, {
+          params: {
+            page,
+            limit: ITEMS_PER_PAGE,
+            status: filter === 'all' ? 'all' : filter,
+            name: name || undefined,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMembers(res.data.members);
+        setTotalPages(res.data.totalPage);
+      } catch (error: any) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMember();
+  }, [page, filter, debounceValue]);
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-4">
@@ -27,9 +53,9 @@ export default function MemberList() {
       {/* Search bar */}
       <Input
         placeholder="Search by name..."
-        value={search}
+        value={name}
         onChange={(e) => {
-          setSearch(e.target.value);
+          setName(e.target.value);
           setPage(1); // reset page
         }}
       />
@@ -53,7 +79,8 @@ export default function MemberList() {
 
       {/* Member list */}
       <div className="space-y-2 mt-4">
-        {paginated.map((m) => (
+        {loading && <LoadingPage />}
+        {members.map((m) => (
           <Card key={m.id} className="bg-white">
             <CardContent className="py-3 px-4 flex justify-between items-center">
               <div>
