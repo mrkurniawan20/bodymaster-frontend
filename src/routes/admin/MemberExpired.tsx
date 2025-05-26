@@ -9,7 +9,6 @@ type Member = {
 export function ExpireMemberPage() {
   const { member } = useOutletContext<{ member: Member[] }>();
 
-  // Filter expired members
   const expiredMembers = member.filter((member) => {
     const today = new Date();
     const expire = new Date(member.expireDate);
