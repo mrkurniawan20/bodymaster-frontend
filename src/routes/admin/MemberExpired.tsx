@@ -22,9 +22,11 @@ export function ExpireMemberPage() {
     fetchExpiredMember();
   }, []);
 
+  {
+    loading && <LoadingPage />;
+  }
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      {loading && <LoadingPage />}
       <h2 className="text-2xl font-bold mb-4">Expired Memberships</h2>
       {expiredMembers.length > 0 ? (
         <ul className="space-y-3">
