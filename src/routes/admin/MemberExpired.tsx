@@ -20,6 +20,8 @@ export function ExpireMemberPage() {
     fetchExpiredMember();
   }, []);
 
+  
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {loading && <LoadingPage />}
