@@ -67,7 +67,6 @@ export function useUser() {
 }
 
 export function useMember() {
-  const [member, setMember] = useState<Member[] | null>(null);
   const [visit, setVisit] = useState<Visitor[] | null>(null);
   const [allPayment, setAllPayment] = useState<Payment[] | null>(null);
   const [notifications, setNotifications] = useState<Notifications[] | null>(null);
@@ -80,13 +79,12 @@ export function useMember() {
     }
     try {
       setLoading(true);
-      const fetchAllMember = axios.get(`https://bodymaster-backend.vercel.app/member/getallmember/`, { headers: { Authorization: `Bearer ${token}` } });
       const fetchVisitLog = axios.get('https://bodymaster-backend.vercel.app/member/getvisitlog/', { headers: { Authorization: `Bearer ${token}` } });
       const fetchAllPayment = axios.get('https://bodymaster-backend.vercel.app/member/getpayment/', { headers: { Authorization: `Bearer ${token}` } });
       const fetchAllNotifications = axios.get('https://bodymaster-backend.vercel.app/member/getnotif', { headers: { Authorization: `Bearer ${token}` } });
-      Promise.all([fetchAllMember, fetchVisitLog, fetchAllPayment, fetchAllNotifications])
-        .then(([allMemberRes, visitLogRes, allPaymentRes, allNotificationsRes]) => {
-          setMember(allMemberRes.data), setVisit(visitLogRes.data), setAllPayment(allPaymentRes.data), setNotifications(allNotificationsRes.data);
+      Promise.all([fetchVisitLog, fetchAllPayment, fetchAllNotifications])
+        .then(([visitLogRes, allPaymentRes, allNotificationsRes]) => {
+          setVisit(visitLogRes.data), setAllPayment(allPaymentRes.data), setNotifications(allNotificationsRes.data);
         })
         .catch(() => {
           localStorage.removeItem('token');
@@ -98,5 +96,5 @@ export function useMember() {
       localStorage.removeItem('token');
     }
   }, []);
-  return { member, visit, allPayment, notifications, loading };
+  return { visit, allPayment, notifications, loading };
 }

@@ -10,7 +10,6 @@ import axios from 'axios';
 import LoadingPage from '../LoadingPage';
 
 export function AdminDashboard() {
-  // const { member } = useOutletContext<{ member: Member[] }>();
   const token = localStorage.getItem('token');
 
   const { notifications } = useOutletContext<{ notifications: Notifications[] }>();
