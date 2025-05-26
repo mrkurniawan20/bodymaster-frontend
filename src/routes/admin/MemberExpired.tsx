@@ -1,22 +1,30 @@
-import { useOutletContext } from 'react-router-dom';
-
-type Member = {
-  id: number;
-  name: string;
-  expireDate: string; // or Date if already parsed
-};
+import type { Member } from '@/services/useUser';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import LoadingPage from '../LoadingPage';
 
 export function ExpireMemberPage() {
-  const { member } = useOutletContext<{ member: Member[] }>();
+  const [expiredMembers, setExpiredMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    async function fetchExpiredMember() {
+      try {
+        setLoading(true);
+        const res = await axios.get('https://bodymaster-backend.vercel.app/member/getExpiredMember');
+        setExpiredMembers(res.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchExpiredMember();
+  }, []);
 
-  const expiredMembers = member.filter((member) => {
-    const today = new Date();
-    const expire = new Date(member.expireDate);
-    return expire < today;
-  });
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      {loading && <LoadingPage />}
       <h2 className="text-2xl font-bold mb-4">Expired Memberships</h2>
       {expiredMembers.length > 0 ? (
         <ul className="space-y-3">

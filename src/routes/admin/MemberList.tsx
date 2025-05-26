@@ -79,22 +79,23 @@ export default function MemberList() {
       {/* Member list */}
       <div className="space-y-2 mt-4">
         {loading && <LoadingPage />}
-        {members.map((m) => (
-          <Card key={m.id} className="bg-white">
-            <CardContent className="py-3 px-4 flex justify-between items-center">
-              <div>
-                <p className="font-medium">{m.name}</p>
-                <p className="text-sm text-gray-500">ID: {m.id}</p>
-              </div>
-              <div className="flex flex-col items-end">
-                <Badge variant={m.status == 'ACTIVE' ? 'default' : 'outline'} className={m.status == 'ACTIVE' ? 'bg-green-500' : 'bg-gray-300 text-gray-700'}>
-                  {m.status == 'ACTIVE' ? 'Active' : 'Inactive'}
-                </Badge>
-                <p className="text-xs text-gray-400 mt-1">Member expire: {new Date(m.expireDate).toLocaleDateString(`id-ID`)}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {!loading &&
+          members.map((m) => (
+            <Card key={m.id} className="bg-white">
+              <CardContent className="py-3 px-4 flex justify-between items-center">
+                <div>
+                  <p className="font-medium">{m.name}</p>
+                  <p className="text-sm text-gray-500">ID: {m.id}</p>
+                </div>
+                <div className="flex flex-col items-end">
+                  <Badge variant={m.status == 'ACTIVE' ? 'default' : 'outline'} className={m.status == 'ACTIVE' ? 'bg-green-500' : 'bg-gray-300 text-gray-700'}>
+                    {m.status == 'ACTIVE' ? 'Active' : 'Inactive'}
+                  </Badge>
+                  <p className="text-xs text-gray-400 mt-1">Member expire: {new Date(m.expireDate).toLocaleDateString(`id-ID`)}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
       </div>
 
       {/* Pagination */}
