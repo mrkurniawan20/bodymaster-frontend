@@ -4,23 +4,23 @@ import { useEffect, useState } from 'react';
 import LoadingPage from '../LoadingPage';
 
 export function ExpireMemberPage() {
+  const token = localStorage.getItem('token');
   const [expiredMembers, setExpiredMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchExpiredMember() {
       try {
         setLoading(true);
-        const res = await axios.get('https://bodymaster-backend.vercel.app/member/getExpiredMember');
+        const res = await axios.get('https://bodymaster-backend.vercel.app/member/getExpiredMember', { headers: { Authorization: `Bearer ${token}` } });
         setExpiredMembers(res.data);
-        setLoading(false);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchExpiredMember();
   }, []);
-
-  
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
