@@ -8,7 +8,7 @@ import LoadingPage from '../LoadingPage';
 
 export default function VisitorLog() {
   const ITEMS_PER_PAGE = 10;
-
+  const token = localStorage.getItem('token');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
@@ -30,6 +30,9 @@ export default function VisitorLog() {
             params: {
               page,
               limit: ITEMS_PER_PAGE,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
           }
         );

@@ -13,6 +13,7 @@ import LoadingPage from '../LoadingPage';
 const ITEMS_PER_PAGE = 10;
 
 export default function PaymentPage() {
+  const token = localStorage.getItem('token');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [page, setPage] = useState(1);
   const [payment, setPayment] = useState<Payment[]>([]);
@@ -32,6 +33,9 @@ export default function PaymentPage() {
             params: {
               page,
               limit: ITEMS_PER_PAGE,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
           }
         );
