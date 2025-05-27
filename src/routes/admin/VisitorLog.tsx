@@ -15,17 +15,16 @@ export default function VisitorLog() {
     console.log(e.target.value);
     setPage(1); // Reset halaman saat ganti tanggal
   };
-  const [member, setMember] = useState<Visitor[]>([]);
+  const [visitor, setVisitor] = useState<Visitor[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    async function fetchMember() {
+    async function fetchVisit() {
       setLoading(true);
-      console.log(selectedDate);
       try {
         const res = await axios.post(
-          'http://localhost:3450/member/visitlog',
+          'https://bodymaster-backend.vercel.app/member/visitlog',
           { selectedDate: selectedDate.toISOString() },
           {
             params: {
@@ -35,7 +34,7 @@ export default function VisitorLog() {
           }
         );
         console.log(res);
-        setMember(res.data.members);
+        setVisitor(res.data.members);
         setTotalPages(res.data.totalPages);
       } catch (error) {
         console.error(error);
@@ -43,7 +42,7 @@ export default function VisitorLog() {
         setLoading(false);
       }
     }
-    fetchMember();
+    fetchVisit();
   }, [selectedDate, page]);
 
   {
@@ -63,15 +62,14 @@ export default function VisitorLog() {
       {/* Visitor List */}
       <div className="space-y-4 mt-6">
         {loading && <LoadingPage />}
-        {!loading && member.length > 0 ? (
-          member.map((visitor, index) => (
+        {!loading && visitor.length > 0 ? (
+          visitor.map((visit, index) => (
             <Card key={index} className="bg-white">
               <CardContent className="py-4 px-4 flex items-center justify-between">
                 <div>
-                  {/* <p className="text-sm text-gray-500">Visit Time: {String(visitor.visitedAt).split('T')[1].split('.')[0]}</p> */}
-                  <p className="text-sm text-gray-500">Visit Time: {new Date(visitor.visitedAt).toLocaleTimeString()}</p>
+                  <p className="text-sm text-gray-500">Visit Time: {new Date(visit.visitedAt).toLocaleTimeString()}</p>
                 </div>
-                <p className="text-lg font-semibold">{visitor.member.name}</p>
+                <p className="text-lg font-semibold">{visit.member.name}</p>
               </CardContent>
             </Card>
           ))

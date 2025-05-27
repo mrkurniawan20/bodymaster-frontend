@@ -34,7 +34,7 @@ export function ProtectedRouteLayoutAdmin() {
     }
   }, [title]);
 
-  const { visit, loading, allPayment, notifications } = useMember();
+  const { loading, allPayment, notifications } = useMember();
   if (loading) {
     return <LoadingPage />;
   }
@@ -42,6 +42,6 @@ export function ProtectedRouteLayoutAdmin() {
   if (decoded.role !== 'ADMIN') {
     return <Navigate to={'/'} />;
   } else {
-    return <Outlet context={{ visit, allPayment, notifications }} />;
+    return <Outlet context={{ allPayment, notifications }} />;
   }
 }
