@@ -1,34 +1,53 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DollarSign, Calendar } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { useOutletContext } from 'react-router-dom';
 import type { Payment } from '@/services/useUser';
+import axios from 'axios';
+import LoadingPage from '../LoadingPage';
 
 const ITEMS_PER_PAGE = 10;
 
-const formatDate = (date: Date): string => date.toISOString().split('T')[0];
-
 export default function PaymentPage() {
-  const { allPayment } = useOutletContext<{ allPayment: Payment[] }>();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [page, setPage] = useState(1);
-  const formattedDate = formatDate(selectedDate);
+  const [payment, setPayment] = useState<Payment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [dailyIncome, setDailyIncome] = useState(0);
+  const [monthlyIncome, setMonthlyIncome] = useState(0);
 
-  // Filter payments by selected date
-  // const filteredPayments = allPayment.filter((p) => String(new Date(p.paymentAt)).split('T')[0] == selectedDate.toJSON().split('T')[0]);
-  const filteredPayments = allPayment.filter((p) => {
-    const paymentDate = new Date(p.paymentAt).toLocaleDateString();
-    const selected = selectedDate.toLocaleDateString();
-    return paymentDate == selected;
-  });
-
-  const totalPages = Math.ceil(filteredPayments.length / ITEMS_PER_PAGE);
-  const paginated = filteredPayments.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  useEffect(() => {
+    async function fetchPayment() {
+      setLoading(true);
+      try {
+        const res = await axios.post(
+          'https://bodymaster-backend.vercel.app/member/getpayment',
+          { selectedDate: selectedDate.toISOString() },
+          {
+            params: {
+              page,
+              limit: ITEMS_PER_PAGE,
+            },
+          }
+        );
+        console.log(res);
+        setPayment(res.data.members);
+        setTotalPages(res.data.totalPages);
+        setDailyIncome(res.data.dailySum._sum.amount);
+        setMonthlyIncome(res.data.monthlySum._sum.amount);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPayment();
+  }, [selectedDate, page]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
@@ -42,7 +61,7 @@ export default function PaymentPage() {
         <h1 className="text-xl font-bold">Payments</h1>
         <div className="flex items-center space-x-2">
           <Calendar className="h-5 w-5 text-gray-400" />
-          <input type="date" value={formattedDate} onChange={handleDateChange} className="border rounded-md px-3 py-2" />
+          <input type="date" value={selectedDate.toISOString().split('T')[0]} onChange={handleDateChange} className="border rounded-md px-3 py-2" />
         </div>
       </div>
 
@@ -51,8 +70,19 @@ export default function PaymentPage() {
         <Card>
           <CardContent className="p-4 flex justify-between items-center">
             <div>
-              <p className="text-sm text-gray-500">Total Income</p>
-              <p className="text-xl font-semibold">Rp 8.000.000</p>
+              <p className="text-sm text-gray-500">Daily Income</p>
+              <p className="text-xl font-semibold">Rp {dailyIncome.toLocaleString('id-ID')}</p>
+            </div>
+            <DollarSign className="h-6 w-6 text-green-500" />
+          </CardContent>
+        </Card>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="p-4 flex justify-between items-center">
+            <div>
+              <p className="text-sm text-gray-500">Monthly Income</p>
+              <p className="text-xl font-semibold">Rp {monthlyIncome.toLocaleString('id-ID')}</p>
             </div>
             <DollarSign className="h-6 w-6 text-green-500" />
           </CardContent>
@@ -118,7 +148,8 @@ export default function PaymentPage() {
 
       {/* Payment Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow">
-        {paginated.length > 0 ? (
+        {loading && <LoadingPage />}
+        {!loading && payment.length > 0 ? (
           <table className="min-w-full table-auto text-sm">
             <thead className="bg-gray-200 text-left text-xs uppercase font-semibold text-gray-600">
               <tr>
@@ -129,7 +160,7 @@ export default function PaymentPage() {
               </tr>
             </thead>
             <tbody>
-              {paginated.map((p) => (
+              {payment.map((p) => (
                 <tr key={p.id} className="border-b">
                   {/* <td className="px-4 py-2">{p.member.split(' ')[1]}</td> */}
                   <td className="px-4 py-2">{p.memberId}</td>
