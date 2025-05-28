@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { DollarSign, Calendar, Loader2 } from 'lucide-react';
+import { DollarSign, Calendar } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -40,10 +40,6 @@ export default function PaymentPage() {
           }
         );
         console.log(res);
-        if (res.data.dailySum._sum.amount == null && res.data.monthlySum._sum.amount == null) {
-          setDailyIncome(0);
-          setMonthlyIncome(0);
-        }
         setPayment(res.data.members);
         setTotalPages(res.data.totalPages);
         setDailyIncome(res.data.dailySum._sum.amount);
@@ -79,8 +75,7 @@ export default function PaymentPage() {
           <CardContent className="p-4 flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Daily Income</p>
-              {loading && <Loader2 className="h-10 w-10 animate-spin text-gray-500" />}
-              {!loading && <p className="text-xl font-semibold">Rp {monthlyIncome.toLocaleString('id-ID')}</p>}
+              <p className="text-xl font-semibold">Rp {dailyIncome.toLocaleString('id-ID')}</p>
             </div>
             <DollarSign className="h-6 w-6 text-green-500" />
           </CardContent>
@@ -91,8 +86,7 @@ export default function PaymentPage() {
           <CardContent className="p-4 flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Monthly Income</p>
-              {loading && <Loader2 className="h-10 w-10 animate-spin text-gray-500" />}
-              {!loading && <p className="text-xl font-semibold">Rp {dailyIncome.toLocaleString('id-ID')}</p>}
+              <p className="text-xl font-semibold">Rp {monthlyIncome.toLocaleString('id-ID')}</p>
             </div>
             <DollarSign className="h-6 w-6 text-green-500" />
           </CardContent>
