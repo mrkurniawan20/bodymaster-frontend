@@ -7,12 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import type { Payment } from '@/services/useUser';
-import axios from 'axios';
 import LoadingPage from '../LoadingPage';
-
-const ITEMS_PER_PAGE = 10;
+import { api } from '@/services/api';
 
 export default function PaymentPage() {
+  const ITEMS_PER_PAGE = 10;
   const token = localStorage.getItem('token');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [page, setPage] = useState(1);
@@ -26,8 +25,8 @@ export default function PaymentPage() {
     async function fetchPayment() {
       setLoading(true);
       try {
-        const res = await axios.post(
-          'https://bodymaster-backend.vercel.app/member/getpayment',
+        const res = await api.post(
+          '/getpayment',
           { selectedDate: selectedDate.toISOString() },
           {
             params: {
@@ -54,12 +53,11 @@ export default function PaymentPage() {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
-    setPage(1); // reset to first page when date changes
+    setPage(1);
   };
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">Payments</h1>
         <div className="flex items-center space-x-2">
@@ -68,7 +66,6 @@ export default function PaymentPage() {
         </div>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-4 flex justify-between items-center">
@@ -94,7 +91,6 @@ export default function PaymentPage() {
         </Card>
       </div>
 
-      {/* Add Payment Button */}
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="default">+ Add Payment</Button>
@@ -108,7 +104,6 @@ export default function PaymentPage() {
             onSubmit={(e) => {
               e.preventDefault();
               const form = e.currentTarget;
-              // TODO: Add to state or send to backend
               form.reset();
             }}
           >
@@ -151,7 +146,6 @@ export default function PaymentPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Payment Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow">
         {loading && <LoadingPage />}
         {!loading && payment.length > 0 ? (
@@ -167,7 +161,6 @@ export default function PaymentPage() {
             <tbody>
               {payment.map((p) => (
                 <tr key={p.id} className="border-b">
-                  {/* <td className="px-4 py-2">{p.member.split(' ')[1]}</td> */}
                   <td className="px-4 py-2">{p.memberId}</td>
                   <td className="px-4 py-2">{p.name}</td>
                   <td className="px-4 py-2">{p.amount.toLocaleString()}</td>
@@ -181,7 +174,6 @@ export default function PaymentPage() {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-between items-center mt-4">
           <Button variant="secondary" onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={page === 1}>

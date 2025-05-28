@@ -1,6 +1,7 @@
-import axios, { type AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
+import { api } from './api';
 
 interface Decoded {
   id: number;
@@ -52,8 +53,8 @@ export function useUser() {
     try {
       const decoded = jwtDecode<Decoded>(token);
       const userId = decoded.id;
-      axios
-        .get(`https://bodymaster-backend.vercel.app/member/getmember/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
+      api
+        .get(`/getmember/${userId}`, { headers: { Authorization: `Bearer ${token}` } })
         .then((res: AxiosResponse) => setUser(res.data))
         .catch(() => {
           localStorage.removeItem('token');
@@ -77,7 +78,7 @@ export function useMember() {
     }
     try {
       setLoading(true);
-      const fetchAllNotifications = axios.get('https://bodymaster-backend.vercel.app/member/getnotif', { headers: { Authorization: `Bearer ${token}` } });
+      const fetchAllNotifications = api.get('/getnotif', { headers: { Authorization: `Bearer ${token}` } });
       Promise.all([fetchAllNotifications])
         .then(([allNotificationsRes]) => {
           setNotifications(allNotificationsRes.data);

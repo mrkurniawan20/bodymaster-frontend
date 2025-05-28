@@ -4,9 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import axios from 'axios';
 import LoadingPage from '../LoadingPage';
 import { useDebounce } from '@/services/useDebounce';
+import { api } from '@/services/api';
 
 export default function MemberList() {
   const token = localStorage.getItem('token');
@@ -23,7 +23,7 @@ export default function MemberList() {
     async function fetchMember() {
       setLoading(true);
       try {
-        const res = await axios.get(`https://bodymaster-backend.vercel.app/member/getallmember/`, {
+        const res = await api.get(`/getallmember/`, {
           params: {
             page,
             limit: ITEMS_PER_PAGE,
@@ -49,17 +49,15 @@ export default function MemberList() {
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-4">
       <h1 className="text-xl font-bold">Member List</h1>
 
-      {/* Search bar */}
       <Input
         placeholder="Search by name..."
         value={name}
         onChange={(e) => {
           setName(e.target.value);
-          setPage(1); // reset page
+          setPage(1);
         }}
       />
 
-      {/* Filter buttons */}
       <div className="flex space-x-2 mt-2">
         {['all', 'active', 'inactive'].map((f) => (
           <Button
@@ -76,7 +74,6 @@ export default function MemberList() {
         ))}
       </div>
 
-      {/* Member list */}
       <div className="space-y-2 mt-4">
         {loading && <LoadingPage />}
         {!loading &&
@@ -98,7 +95,6 @@ export default function MemberList() {
           ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-between items-center mt-6">
         <Button disabled={page === 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
           Prev

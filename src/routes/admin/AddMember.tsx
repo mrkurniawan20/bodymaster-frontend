@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import axios from 'axios';
+import { api } from '@/services/api';
 
 type MemberForm = {
   name: string;
@@ -29,8 +29,6 @@ export default function AddMember() {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  //   const navigate = useNavigate(); // Optional, kalau mau redirect setelah submit
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -40,8 +38,8 @@ export default function AddMember() {
     e.preventDefault();
     setLoading(true);
     try {
-      axios
-        .post('https://bodymaster-backend.vercel.app/member/addmember/', formData, { headers: { Authorization: `Bearer ${token}` } })
+      api
+        .post('/addmember/', formData, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => {
           setError(false);
           setSuccess(true);
@@ -52,14 +50,10 @@ export default function AddMember() {
         })
         .finally(() => {
           setLoading(false);
-          // setError(false);
         });
     } catch (error) {
       setError(true);
     }
-    // TODO: Kirim ke backend di sini
-
-    // navigate('/dashboard'); // kalau mau balik ke dashboard
   };
 
   return (
@@ -69,7 +63,6 @@ export default function AddMember() {
       <Card className="bg-white max-w-xl mx-auto">
         <CardContent className="p-6">
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Name */}
             <div>
               <Label htmlFor="name">Full Name</Label>
               <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Enter full name" required className="mt-2" />
@@ -83,14 +76,12 @@ export default function AddMember() {
               <Input id="password" name="password" value={formData.password} onChange={handleChange} placeholder="••••••••" required className="mt-2" type="password" />
             </div>
 
-            {/* Phone */}
             <div>
               <Label htmlFor="phone">Phone Number</Label>
               <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="08xxxxxxxxxx" required className="mt-2" />
             </div>
             <div>
               <Label htmlFor="category">Category</Label>
-              {/* <Input id="category" name="category" value={form.category} onChange={handleChange} placeholder="08xxxxxxxxxx" required className="mt-2" /> */}
               <div className="flex items-center">
                 <Checkbox
                   id="reguler"
@@ -104,7 +95,6 @@ export default function AddMember() {
                 <label htmlFor="reguler" className="items-center ml-2 mt-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Reguler
                 </label>
-                {/* <div className="grid gap-1.5 leading-none mt-2"></div> */}
               </div>
               <div className="flex items-center">
                 <Checkbox
@@ -119,7 +109,6 @@ export default function AddMember() {
                 <label htmlFor="wanita" className="items-center ml-2 mt-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Wanita
                 </label>
-                {/* <div className="grid gap-1.5 leading-none mt-2"></div> */}
               </div>
               <div className="flex items-center">
                 <Checkbox
@@ -134,7 +123,6 @@ export default function AddMember() {
                 <label htmlFor="pelajar" className="items-center ml-2 mt-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Pelajar
                 </label>
-                {/* <div className="grid gap-1.5 leading-none mt-2"></div> */}
               </div>
             </div>
             <div className="mt-2">
@@ -153,7 +141,6 @@ export default function AddMember() {
                 <label htmlFor="reguler" className="items-center ml-2 mt-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   QR
                 </label>
-                {/* <div className="grid gap-1.5 leading-none mt-2"></div> */}
               </div>
               <div className="flex items-center">
                 <Checkbox
@@ -168,7 +155,6 @@ export default function AddMember() {
                 <label htmlFor="wanita" className="items-center ml-2 mt-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Cash
                 </label>
-                {/* <div className="grid gap-1.5 leading-none mt-2"></div> */}
               </div>
             </div>
 

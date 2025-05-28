@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'https://bodymaster-backend.vercel.app/member',
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 
 export function getMember(id: string) {

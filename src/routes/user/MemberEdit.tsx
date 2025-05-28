@@ -3,8 +3,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
-import axios from 'axios';
 import type { Member } from '@/services/useUser';
+import { api } from '@/services/api';
 
 export default function EditMemberPage() {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ export default function EditMemberPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
-    // setSelectedFile(e.target.files[0])
     const files = e.target.files;
     if (files) {
       setFormData((prev) => ({ ...prev, image: files[0] }));
@@ -45,7 +44,7 @@ export default function EditMemberPage() {
       if (formData.phone) data.append('phone', formData.phone);
       if (formData.password) data.append('password', formData.password);
       if (formData.image) data.append('image', formData.image);
-      await axios.patch(`https://bodymaster-backend.vercel.app/member/editmember/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
+      await api.patch(`/editmember/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/landingpage');
     } catch (err) {
       console.error('Update failed:', err);

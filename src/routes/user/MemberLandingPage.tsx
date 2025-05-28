@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import type { Member } from '@/services/useUser';
-import axios from 'axios';
+import { api } from '@/services/api';
 
 export default function MemberLandingPage() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export default function MemberLandingPage() {
 
   async function handleClick() {
     try {
-      await axios.post(`https://bodymaster-backend.vercel.app/member/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await api.post(`/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/memberinfo');
     } catch (error: any) {}
   }
