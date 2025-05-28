@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { DollarSign, Calendar } from 'lucide-react';
+import { DollarSign, Calendar, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -42,8 +42,8 @@ export default function PaymentPage() {
         console.log(res);
         setPayment(res.data.members);
         setTotalPages(res.data.totalPages);
-        setDailyIncome(res.data.dailySum._sum.amount);
-        setMonthlyIncome(res.data.monthlySum._sum.amount);
+        setDailyIncome(res.data.dailySum._sum.amount + 0);
+        setMonthlyIncome(res.data.monthlySum._sum.amount + 0);
       } catch (error) {
         console.error(error);
       } finally {
@@ -75,7 +75,8 @@ export default function PaymentPage() {
           <CardContent className="p-4 flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Daily Income</p>
-              <p className="text-xl font-semibold">Rp {dailyIncome.toLocaleString('id-ID')}</p>
+              {loading && <Loader2 className="h-10 w-10 animate-spin text-gray-500" />}
+              {!loading && <p className="text-xl font-semibold">Rp {dailyIncome.toLocaleString('id-ID')}</p>}
             </div>
             <DollarSign className="h-6 w-6 text-green-500" />
           </CardContent>
@@ -86,7 +87,8 @@ export default function PaymentPage() {
           <CardContent className="p-4 flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Monthly Income</p>
-              <p className="text-xl font-semibold">Rp {monthlyIncome.toLocaleString('id-ID')}</p>
+              {loading && <Loader2 className="h-10 w-10 animate-spin text-gray-500" />}
+              {!loading && <p className="text-xl font-semibold">Rp {monthlyIncome.toLocaleString('id-ID')}</p>}
             </div>
             <DollarSign className="h-6 w-6 text-green-500" />
           </CardContent>
