@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { type Visitor } from '@/services/useUser';
-import axios from 'axios';
 import LoadingPage from '../LoadingPage';
+import { api } from '@/services/api';
 
 export default function VisitorLog() {
   const ITEMS_PER_PAGE = 10;
@@ -12,8 +12,7 @@ export default function VisitorLog() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
-    console.log(e.target.value);
-    setPage(1); // Reset halaman saat ganti tanggal
+    setPage(1);
   };
   const [visitor, setVisitor] = useState<Visitor[]>([]);
   const [page, setPage] = useState(1);
@@ -23,8 +22,8 @@ export default function VisitorLog() {
     async function fetchVisit() {
       setLoading(true);
       try {
-        const res = await axios.post(
-          'https://bodymaster-backend.vercel.app/member/visitlog',
+        const res = await api.post(
+          '/visitlog',
           { selectedDate: selectedDate.toISOString() },
           {
             params: {
@@ -36,7 +35,6 @@ export default function VisitorLog() {
             },
           }
         );
-        console.log(res);
         setVisitor(res.data.members);
         setTotalPages(res.data.totalPages);
       } catch (error) {
@@ -53,7 +51,6 @@ export default function VisitorLog() {
   }
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 space-y-4">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">Visitor Log</h1>
         <div className="flex items-center space-x-2">
@@ -62,7 +59,6 @@ export default function VisitorLog() {
         </div>
       </div>
 
-      {/* Visitor List */}
       <div className="space-y-4 mt-6">
         {loading && <LoadingPage />}
         {!loading && visitor.length > 0 ? (
@@ -80,8 +76,6 @@ export default function VisitorLog() {
           <p className="text-center text-gray-500">No visitors today.</p>
         )}
       </div>
-
-      {/* Pagination */}
 
       <div className="flex justify-between items-center mt-6">
         <Button variant="secondary" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}>

@@ -1,7 +1,7 @@
 import type { Member } from '@/services/useUser';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingPage from '../LoadingPage';
+import { api } from '@/services/api';
 
 export function ExpireMemberPage() {
   const token = localStorage.getItem('token');
@@ -11,7 +11,7 @@ export function ExpireMemberPage() {
     async function fetchExpiredMember() {
       try {
         setLoading(true);
-        const res = await axios.get('https://bodymaster-backend.vercel.app/member/getExpiredMember', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await api.get('/getExpiredMember', { headers: { Authorization: `Bearer ${token}` } });
         setExpiredMembers(res.data);
       } catch (error) {
         console.error(error);

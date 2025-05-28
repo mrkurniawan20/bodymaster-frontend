@@ -3,11 +3,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import type { Member } from '@/services/useUser';
 import { Checkbox } from '@/components/ui/checkbox';
 import LoadingPage from '../LoadingPage';
 import { Loader2 } from 'lucide-react';
+import { api } from '@/services/api';
 
 export default function MemberExtend() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function MemberExtend() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`https://bodymaster-backend.vercel.app/member/extendmember/`, formData, { headers: { Authorization: `Bearer ${token}` } });
+      await api.post(`/extendmember/`, formData, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/dashboard');
       window.location.reload();
     } catch (err: any) {
@@ -45,8 +45,8 @@ export default function MemberExtend() {
     e.preventDefault();
     try {
       setLoading(true);
-      axios
-        .get(`https://bodymaster-backend.vercel.app/member/getMember/${formData.id}`)
+      api
+        .get(`/getMember/${formData.id}`)
         .then((res) => {
           setMember(res.data);
         })

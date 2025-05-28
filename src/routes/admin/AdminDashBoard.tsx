@@ -6,8 +6,8 @@ import { NavLink, useOutletContext } from 'react-router-dom';
 import type { Notifications } from '@/services/useUser';
 import { useEffect, useState } from 'react';
 import { GoDotFill } from 'react-icons/go';
-import axios from 'axios';
 import LoadingPage from '../LoadingPage';
+import { api } from '@/services/api';
 
 export function AdminDashboard() {
   const token = localStorage.getItem('token');
@@ -20,7 +20,7 @@ export function AdminDashboard() {
     async function fetchData() {
       setLoading(true);
       try {
-        const res = await axios.get('https://bodymaster-backend.vercel.app/member/getactivecount', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await api.get('/getactivecount', { headers: { Authorization: `Bearer ${token}` } });
         setActiveMember(res.data.activeMember);
         setTodayVisit(res.data.todayVisitMember);
       } catch (error) {
