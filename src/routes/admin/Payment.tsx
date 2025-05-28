@@ -39,7 +39,6 @@ export default function PaymentPage() {
             },
           }
         );
-        console.log(res);
         setPayment(res.data.members);
         setTotalPages(res.data.totalPages);
         setDailyIncome(res.data.dailySum._sum.amount + 0);

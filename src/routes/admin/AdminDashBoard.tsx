@@ -56,7 +56,7 @@ export function AdminDashboard() {
             <DrawerHeader>
               <DrawerTitle>Expired Members</DrawerTitle>
             </DrawerHeader>
-            <div className="p-4 space-y-4 max-h-[300px] overflow-y-auto">
+            <div className="p-4 pb-0 space-y-4 max-h-[350px] overflow-y-auto">
               {notifications.map((notif) => (
                 <NavLink to={'/expiredmember'} key={notif.id}>
                   <p className="text-sm font-medium text-gray-800">
@@ -66,7 +66,7 @@ export function AdminDashboard() {
                       year: 'numeric',
                     })}
                   </p>
-                  <p className="text-xs text-gray-500">{notif.content}</p>
+                  <p className="text-xs text-gray-500 mb-4">{notif.content}</p>
                 </NavLink>
               ))}
             </div>
