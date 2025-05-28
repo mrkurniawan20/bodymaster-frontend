@@ -40,6 +40,10 @@ export default function PaymentPage() {
           }
         );
         console.log(res);
+        if (res.data.dailySum._sum.amount == null && res.data.monthlySum._sum.amount == null) {
+          setDailyIncome(0);
+          setMonthlyIncome(0);
+        }
         setPayment(res.data.members);
         setTotalPages(res.data.totalPages);
         setDailyIncome(res.data.dailySum._sum.amount);
