@@ -9,7 +9,7 @@ import { api } from '@/services/api';
 export default function VisitorLog() {
   const ITEMS_PER_PAGE = 10;
   const token = localStorage.getItem('token');
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(new Date().getTime() + 7 * 60 * 60 * 1000));
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(new Date(e.target.value));
     setPage(1);

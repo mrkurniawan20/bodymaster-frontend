@@ -13,7 +13,7 @@ import { api } from '@/services/api';
 export default function PaymentPage() {
   const ITEMS_PER_PAGE = 10;
   const token = localStorage.getItem('token');
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(new Date().getTime() + 7 * 60 * 60 * 1000));
   const [page, setPage] = useState(1);
   const [payment, setPayment] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
