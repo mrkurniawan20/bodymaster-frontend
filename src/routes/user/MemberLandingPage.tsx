@@ -11,9 +11,11 @@ export default function MemberLandingPage() {
 
   async function handleClick() {
     try {
-      await api.post(`/visit/${user.id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await api.post(`/visit/${user.id}`, null, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/memberinfo');
-    } catch (error: any) {}
+    } catch (error: any) {
+      console.log(error.message);
+    }
   }
 
   return (
