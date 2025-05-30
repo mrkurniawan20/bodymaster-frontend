@@ -3,13 +3,17 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import type { Member } from '@/services/useUser';
 import { api } from '@/services/api';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 export default function MemberLandingPage() {
   const navigate = useNavigate();
   const { user } = useOutletContext<{ user: Member }>();
   const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
 
   async function handleClick() {
+    setLoading(true);
     try {
       await api.post(`/visit/${user.id}`, null, { headers: { Authorization: `Bearer ${token}` } });
       navigate('/memberinfo');
@@ -29,7 +33,8 @@ export default function MemberLandingPage() {
             ✏️ Edit Data
           </Button>
           <Button className="w-full" onClick={handleClick}>
-            💪🏼 Start Working Out
+            {loading && <Loader2 className="size-6 animate-spin text-gray-500" />}
+            {!loading && `💪🏼 Start Working Out`}
           </Button>
         </CardContent>
       </Card>

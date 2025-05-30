@@ -43,8 +43,8 @@ export default function MemberExtend() {
   const [buttonDisable, setButtonDisable] = useState(true);
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
+    setLoading(true);
     try {
-      setLoading(true);
       api
         .get(`/getMember/${formData.id}`)
         .then((res) => {
